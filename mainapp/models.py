@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-from ckeditor.fields import RichTextField
 
 
 def content_file_name(instance, filename):
@@ -59,7 +58,7 @@ class Product(models.Model):
     slug = models.SlugField(unique=True, db_index=True, max_length=255)
     product_code = models.IntegerField(verbose_name='Product Code')
     price = models.IntegerField(verbose_name='Price')
-    description = RichTextField(verbose_name='Description', null=True, blank=True)
+    description = models.TextField(verbose_name='Description', null=True, blank=True)
     qty_product = models.IntegerField(default=0, verbose_name='Quantity of product')
     ordered = models.IntegerField(default=0, verbose_name='Ordered times')
     popular = models.IntegerField(default=0, verbose_name='Viewed times')
