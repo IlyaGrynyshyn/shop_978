@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block contend %}
-    {% include 'include/catalog.html' %}
     <style>
         .errors {
             font-size: 16px;
@@ -41,7 +40,7 @@
                                     <span class="custom-checkbox__checkmark"></span>
                                     <span class="custom-checkbox__label">Запам'ятати мене</span>
                                 </label>
-                                <a href="{% url 'accounts:reset_password' %}">Забули пароль?</a>
+                                <a href="#">Забули пароль?</a>
                             </div>
                             <button type="submit" class="form__submit login__submit btn-red btn-blick">Увійти</button>
                         </form>
