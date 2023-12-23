@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from account.managers import UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class Customer(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('username'), max_length=255, unique=True, null=True, blank=True)
     first_name = models.CharField(_('first_name'), max_length=255, null=True, blank=True)
     last_name = models.CharField(_('last_name'), max_length=255, null=True, blank=True)
