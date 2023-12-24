@@ -55,7 +55,7 @@
         <!-- Header > Actions -->
          <div class="header__actions">
                     {% if user.is_authenticated %}
-                        <a href="" class="header__actions-btn">
+                        <a href="{% url "account:profile" %}" class="header__actions-btn">
                             <span class="header__actions-icon">
                             <span style="display:none;" class="header__actions-counter">0</span>
                             <span class="header__actions-icon--order-list-total"></span>
