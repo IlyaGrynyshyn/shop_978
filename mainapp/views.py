@@ -15,7 +15,7 @@ class BaseListView(ListView):
         return context
 
 class CategoryListView(ListView):
-    model = Category
+    model = Product
     template_name = 'mainapp/product_list.html'
     slug_url_kwarg = 'category_slug'
     paginate_by = 12
