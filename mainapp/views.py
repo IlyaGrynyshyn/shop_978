@@ -13,3 +13,10 @@ class BaseListView(ListView):
         context['top_category'] = TopCategory.objects.all()
         context['categories'] = Category.objects.filter(top_category=None)
         return context
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'mainapp/product_list.html'
+    slug_url_kwarg = 'category_slug'
+    paginate_by = 12
+
