@@ -1,10 +1,16 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, DetailView
+from django.contrib.auth import views, logout
 
 from account.forms import CustomerRegistrationForm
 from account.models import Customer
+
+
+class CustomerLoginView(views.LoginView):
+    success_url = reverse_lazy("account:profile")
 
 
 class CustomerRegistrationView(FormView):
@@ -26,5 +32,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         return self.request.user.username
 
 
-
-
+@login_required(login_url="account:login")
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/')
