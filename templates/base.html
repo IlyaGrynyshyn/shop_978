@@ -51,35 +51,44 @@
           <div id="results-box" class="results-card not-visible"><p></p></div>
         </form>
         <!-- Header > Actions -->
-        <div class="header__actions">
-          <a href="" class="header__actions-btn">
+         <div class="header__actions">
+                    {% if user.is_authenticated %}
+                        <a href="" class="header__actions-btn">
                             <span class="header__actions-icon">
                             <span style="display:none;" class="header__actions-counter">0</span>
                             <span class="header__actions-icon--order-list-total"></span>
                             </span>
-          </a>
-          <a href="" class="header__actions-btn">
+                        </a>
+                        <a href="" class="header__actions-btn">
                             <span class="header__actions-icon">
                             <span id="wishlist-total" style="display:none;" class="header__actions-counter">0</span>
                             <span class="header__actions-icon--whishlist"></span>
                             </span>
-          </a>
-          <a href="" class="header__actions-btn">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'account:login' %}" class="header__actions-btn">
+                        <span class="header__actions-icon">
+                            <span id="compare-total" style="display:none;" class="header__actions-counter">0</span>
+                            <span class="header__actions-icon--profile"></span>
+                            </span>
+                    {% endif %}
+                    </a>
+                    <a href="" class="header__actions-btn">
 								<span class="header__actions-icon">
 									<span style="" class="header__actions-counter" id="cart-total2"><span
-                      id="cart-total">1</span></span>
+                                            id="cart-total">1</span></span>
 									<span class="header__actions-icon--cart"></span>
 								</span>
-            <span class="header__actions-info">
+                        <span class="header__actions-info">
 									<span class="header__actions-title">Кошик</span>
-									<span class="header__actions-amount">10.000 ₴</span>
+									<span class="header__actions-amount">23,431 ₴</span>
 								</span>
-          </a>
-          <div style="display:none;opacity:0;">
-            <ul>
-            </ul>
-          </div>
-        </div>
+                    </a>
+                    <div style="display:none;opacity:0;">
+                        <ul>
+                        </ul>
+                    </div>
+                </div>
         <div class="header__m-search">
           <form action="" id="search-form" class="header__m-search-form" method="post">
             <button class="header__m-search-open"></button>
