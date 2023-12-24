@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="{% static 'css/datepicker.min.css' %}">
 </head>
 <body class="common-home">
+{% block catagory_catalog %}
+{% endblock catagory_catalog %}
 <!-- ===================== Header =====================-->
 <header class="header">
   <!-- =========== Header > Middle =========== -->
@@ -42,8 +44,8 @@
         <!-- Header > Me nu Button -->
         <a href="#" class="header__menu-btn js__mobile-menu"></a>
         <!-- Header > Logo -->
-        <a href="" class="header__logo">
-          <img src="{% static '978.svg' %}" alt="">
+        <a href="{% url "home" %}" class="header__logo">
+          <img src="{% static 'icon/978.svg' %}" alt="">
         </a>
         <form action="" id="search-form" class="header__search" method="get">
           <input id="search-input" name="q" class="header__search-input" placeholder="Я шукаю...">
@@ -112,7 +114,7 @@
         <div class="col-lg-3 footer__col">
           <a href="" class="footer__logo">
             <picture>
-              <img src="{% static 'Footer978.svg' %}" alt="">
+              <img src="{% static 'icon/Footer978.svg' %}" alt="">
             </picture>
           </a>
           <div class="footer__box">
