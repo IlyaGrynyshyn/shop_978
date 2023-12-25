@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-8 col-xl-7">
                     <h1 class="catalog-head__title section__title">
-                        <span class="catalog-head__title-text">{{ category.title }} ({{ product_count.id__count }})</span>
+                        <span class="catalog-head__title-text">{{ category.title }} ({{ product_count }})</span>
                     </h1>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <section class="section">
                 <div class="container">
                     <div class="catalog-products">
-                        {% for product in page_obj %}
+                        {% for product in product_list %}
                             <div class="col-lg-3">
                                 <div class="productsticker">
                                     {% if product.tag %}
@@ -58,21 +58,21 @@
                                     {% endif %}
                                 </div>
                                 <div class="product-card ">
-                                    <a href="{{ product.get_absolute_url }}" class="product-card__image">
+                                    <a href="" class="product-card__image">
                                         <img src="{{ product.productimage_set.first.img.url }}"
                                              alt="{{ product.title }}">
                                     </a>
                                     <div class="product-card__content">
-                                        <a href="{{ product.get_absolute_url }}"
+                                        <a href=""
                                            class="product-card__title">{{ product.title }}</a>
                                         <div class="product-card__status ">В наявності</div>
                                         <div class="product-card__price">
                                             <span class="current">{{ product.price }} ₴</span>
                                         </div>
                                         <div class="product-card__buttons">
-                                            <a href="{% url 'cart:cart_add' product.id %}"
+                                            <a href=""
                                                class="product-card__buy btn-red-out">В кошик</a>
-                                            <a href="{% url 'wishlist:add_to_wishlist' product.slug %}" class="product-card__btn product-card__btn--whishlist icon-whishlist"></a>
+                                            <a href="" class="product-card__btn product-card__btn--whishlist icon-whishlist"></a>
                                             <a class="product-card__btn product-card__btn--compare icon-compare"></a>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                                 <span class="current">{{ i.price }} ₴</span>
                                             </div>
                                             <div class="product-card__buttons">
-                                                <a href="{% url 'cart:cart_add' i.id %}"
+                                                <a href=""
                                                    class="product-card__buy btn-red-out remarketing_cart_button"
                                                    tabindex="0">В
                                                     кошик</a>
@@ -323,7 +323,7 @@
                                         Оформити замовлення
                                     </a>
                                     <div>
-                                        <a class="popup__close">Продовжити покупки ></a>
+                                        <a class="popup__close"> Продовжити покупки </a>
                                     </div>
                                 </div>
                             </div>
