@@ -2,8 +2,9 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from .forms import CustomerRegistrationForm
-from .models import Customer
+from account.forms import CustomerRegistrationForm
+from account.models import Customer
+
 
 REGISTRATION_URL = reverse('account:registration')
 PROFILE_URL = reverse('account:profile')
@@ -80,14 +81,14 @@ class LogoutViewTest(TestCase):
         response = self.client.get(reverse('account:logout'))
         self.assertEqual(response.status_code, 302)
 
-
     def test_logout_redirects_to_home(self):
         response = self.client.get(reverse('account:logout'))
         self.assertRedirects(response, reverse('home'), status_code=302)
 
+"""
+Tests for forms
+"""
 
-from django.test import TestCase
-from account.models import Customer
 
 class TestCustomerRegistrationForm(TestCase):
     def setUp(self):
