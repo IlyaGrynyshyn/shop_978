@@ -6,6 +6,9 @@ from mainapp.models import Product, TopCategory, Category
 
 
 class BaseListView(ListView):
+    """
+    Responsible for display the main page
+    """
     model = Product
     template_name = "mainapp/mainpage.html"
     context_object_name = 'products'
@@ -17,7 +20,25 @@ class BaseListView(ListView):
         return context
 
 
+class ProductDetailView(DetailView):
+    """
+    Displays the product page
+    """
+    model = Product
+    context_object_name = 'product'
+    template_name = 'mainapp/product_page.html'
+    slug_url_kwarg = 'product_slug'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        top_category = TopCategory.objects.all()
+        context['top_category'] = top_category
+        return context
+
 class CategoryListView(ListView):
+    """
+    Displaying a list of products by category
+    """
     model = Category
     template_name = 'mainapp/product_list.html'
     slug_url_kwarg = 'category_slug'
@@ -40,12 +61,3 @@ class CategoryListView(ListView):
         category_slug = self.kwargs.get('category_slug')
         category = get_object_or_404(Category, slug=category_slug)
         return Product.objects.filter(category=category)
-
-
-class ProductDetailView(DetailView):
-    model = Product
-    context_object_name = 'product'
-    template_name = 'mainapp/product_page.html'
-    slug_url_kwarg = 'product_slug'
-
-
