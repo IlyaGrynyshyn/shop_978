@@ -1,42 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block contend %}
-<div class="header__bottom">
-    <div class="container">
-      <div class="row"><!-- Header > Catalog button -->
-        <div class="col-lg-3 position-none">
-          <div class="header1__catalog active">
-            <div class="header__catalog-shadow"></div>
-            <a class="header__catalog-btn btn-red" href="">
-              <picture>
-                <source srcset="{% static 'icon/menu.svg' %}" type="image/webp"/>
-                <img alt="" src="{% static 'icon/menu.svg' %}"/></picture>
-              <span>Каталог товаров</span> </a> <!-- =========== Header Catalog =========== -->
-
-            <div class="header__catalog-menu">
-              <ul>
-                {% for i in top_category %}
-                  <li>
-                    <a href="">
-                      <img class="menucust_icon" src="{{ i.category_icon.url }}"/>
-                      <span>{{ i.title }}</span></a>
-                    <ul>
-                      {% for cat in i.category_set.all %}
-                        <li>
-                          <a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </li>
-                {% endfor %}
-                <li><a href=""> <span>Усі категорія</span></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+{% include "includes/catagory_catalog.html" %}
   <!-- ===================== /.Header =====================-->
   <!-- ===================== Mobile Menu / Mobile Catalog =====================-->
 
@@ -44,8 +9,8 @@
     <div class="mobile-menu__wrapper">
       <div class="mobile-menu__content"><a class="mobile-menu__logo" href="{% url 'home' %}">
         <picture>
-          <source srcset="{% static '978.svg' %}" type="image/webp"/>
-          <img alt="" src="{% static '978.svg' %}"/></picture>
+          <source srcset="{% static 'icon/978.svg' %}" type="image/webp"/>
+          <img alt="" src="{% static 'icon/978.svg' %}"/></picture>
       </a> <!-- Mobile Menu > Login -->
 
         <div class="mobile-menu__login"><a class="mobile-menu__login--sign-in"
@@ -292,5 +257,3 @@
   </main>
 
   <p>{% endblock %}</p>
-</body>
-</html>
