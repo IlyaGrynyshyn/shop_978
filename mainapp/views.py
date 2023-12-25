@@ -26,10 +26,15 @@ class CategoryListView(ListView):
     # context_object_name = "category"
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['product_list'] = Product.objects.filter(category__slug=self.kwargs['category_slug'])
+        top_category_slug = self.kwargs.get('top_category_slug')
         product_count = Product.objects.filter(category__slug=self.kwargs['category_slug']).count()
+        top_category = TopCategory.objects.all()
+
+        context['top_category'] = top_category
+        context['product_list'] = Product.objects.filter(category__slug=self.kwargs['category_slug'])
         context['product_count'] = product_count
-        context['category'] = self.kwargs['category_slug']
+        context['top_category_slug'] = top_category_slug
+        context['category_slug'] = self.kwargs['category_slug']
         return context
 
 

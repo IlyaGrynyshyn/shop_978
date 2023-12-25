@@ -35,4 +35,4 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
 @login_required(login_url="account:login")
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse_lazy("home"))

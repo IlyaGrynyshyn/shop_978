@@ -25,11 +25,14 @@ class CustomerRegistrationForm(UserCreationForm):
         return phone
 
     def clean(self):
-        password = self.cleaned_data['password1']
-        confirm_password = self.cleaned_data['password1']
-        if password != confirm_password:
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password1')
+        confirm_password = cleaned_data.get('password2')
+
+        if password and confirm_password and password != confirm_password:
             raise forms.ValidationError('Паролі не співпадають')
-        return self.cleaned_data
+
+        return cleaned_data
 
     class Meta:
         model = Customer
