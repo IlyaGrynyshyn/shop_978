@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+
+from .forms import CustomerRegistrationForm
 from .models import Customer
 
 REGISTRATION_URL = reverse('account:registration')
@@ -81,4 +83,65 @@ class LogoutViewTest(TestCase):
 
     def test_logout_redirects_to_home(self):
         response = self.client.get(reverse('account:logout'))
-        self.assertRedirects(response, reverse('home'), status_code=302)  # перенаправлення на головну сторінку
+        self.assertRedirects(response, reverse('home'), status_code=302)
+
+
+from django.test import TestCase
+from account.models import Customer
+
+class TestCustomerRegistrationForm(TestCase):
+    def setUp(self):
+        self.existing_email = 'existing_email@example.com'
+        self.existing_phone = '1234567890'
+        Customer.objects.create(email=self.existing_email, phone=self.existing_phone)
+
+    def test_clean_email_existing_email(self):
+        form_data = {
+            'username': 'testuser',
+            'email': self.existing_email,
+            'first_name': 'Test',
+            'phone': '0987654321',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+        }
+        form = CustomerRegistrationForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
+
+    def test_clean_phone_existing_phone(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'first_name': 'Test',
+            'phone': self.existing_phone,
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+        }
+        form = CustomerRegistrationForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('phone', form.errors)
+
+    def test_clean_password_mismatch(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'first_name': 'Test',
+            'phone': '0987654321',
+            'password1': 'testpassword123',
+            'password2': 'mismatchedpassword',
+        }
+        form = CustomerRegistrationForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn('password2', form.errors)
+
+    def test_clean_valid_data(self):
+        form_data = {
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'first_name': 'Test',
+            'phone': '0987654321',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+        }
+        form = CustomerRegistrationForm(data=form_data)
+        self.assertTrue(form.is_valid())
