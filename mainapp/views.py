@@ -1,6 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from mainapp.models import Product, TopCategory, Category
 
@@ -23,7 +23,6 @@ class CategoryListView(ListView):
     slug_url_kwarg = 'category_slug'
     paginate_by = 12
 
-    # context_object_name = "category"
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         top_category_slug = self.kwargs.get('top_category_slug')
@@ -37,8 +36,16 @@ class CategoryListView(ListView):
         context['category_slug'] = self.kwargs['category_slug']
         return context
 
+    def get_queryset(self):
+        category_slug = self.kwargs.get('category_slug')
+        category = get_object_or_404(Category, slug=category_slug)
+        return Product.objects.filter(category=category)
 
-def get_queryset(self):
-    category_slug = self.kwargs.get('category_slug')
-    category = get_object_or_404(Category, slug=category_slug)
-    return Product.objects.filter(category=category)
+
+class ProductDetailView(DetailView):
+    model = Product
+    context_object_name = 'product'
+    template_name = 'mainapp/product_page.html'
+    slug_url_kwarg = 'product_slug'
+
+
