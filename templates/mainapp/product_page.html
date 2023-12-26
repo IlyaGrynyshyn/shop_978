@@ -13,7 +13,7 @@
       <div class="container">
         <ol>
           <li>
-            <a href="{% url 'home' %}"><span>Главная</span></a>
+            <a href="{% url 'home' %}"><span>Головна</span></a>
           </li>
           <li>
             <a><span> {{ product.category.top_category.title }}</span></a>
@@ -185,7 +185,7 @@
                     </div>
                   {% endif %}
                   <div class="b-i-product-wrap-price">
-                    <a href="{% url 'cart:cart_add' product.id %}"
+                    <a href=""
                        class="b-link-add2bas b-link-add2bas-already-add ">У кошику</a>
                   </div>
                 </div>
@@ -214,7 +214,7 @@
                   <div class="b-pmi-col-right">
                     <div class="b-i-product-wrap-price">
                       <a class="b-link-add2bas b-link-add2bas-already-add "
-                         href="{% url 'cart:cart_add' product.id %}">У кошику</a>
+                         href="">У кошику</a>
                     </div>
                   </div>
                 </div><!-- /.b-pmi-cols -->
@@ -225,7 +225,7 @@
                   <div class="b-pmi-col-left">
                     <ul class="b-i-product-hi-list">
                       <li>
-                        <a class="b-i-product-hi-link-add2wish" href="{% url 'wishlist:add_to_wishlist' product.slug %}"
+                        <a class="b-i-product-hi-link-add2wish" href=""
                            data-toggle="modal" data-target="#popupERL" rel="nofollow"
                            title="Увійти">До
                           списку бажань</a>
@@ -320,7 +320,6 @@
                             </div>
                           </div>
                         {% endfor %}
-
                         <!-- Product Card -->
                         <!-- Products Slider > Controls -->
                         <div class="slick-controls">
