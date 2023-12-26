@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block contend %}
-{% include "includes/catagory_catalog.html" %}
+  {% include "includes/catagory_catalog.html" %}
   <!-- ===================== /.Header =====================-->
   <!-- ===================== Mobile Menu / Mobile Catalog =====================-->
 
@@ -12,7 +12,6 @@
           <source srcset="{% static 'icon/978.svg' %}" type="image/webp"/>
           <img alt="" src="{% static 'icon/978.svg' %}"/></picture>
       </a> <!-- Mobile Menu > Login -->
-
         <div class="mobile-menu__login"><a class="mobile-menu__login--sign-in"
                                            href="">Вхід</a> <a
             class="mobile-menu__login--register" href="">Реєстрація</a></div>
@@ -23,7 +22,7 @@
 
             <ul>
               <li>{% for i in top_category %}</li>
-                <li><a> <img class="menucust_icon" src="{{ i.category_icon.url }}"/> <span>{{ i.title }}</span></a>
+                <li><a> <img class="menucust_icon" src="{{ i.category_icon.url }}" alt="{{ i.title }}"/> <span>{{ i.title }}</span></a>
                   <ul>
                     <li>{% for cat in i.category_set.all %}</li>
                       <li><a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a></li>
@@ -63,13 +62,21 @@
         <div class="col-lg-9 offset-lg-3 promo__inner">
           <!-- =========== Promo > Slider =========== -->
           <div class="promo__slider">
-            {% for i in banner %}
-              <div class="promo__slider-slide">
-                <div class="">
-                  <picture><img src="{{ i.image.url }}" alt="Бесплатная доставка"/></picture>
-                </div>
+            <div class="promo__slider-slide">
+              <div>
+                <picture><img src="{% static "img/baner1.jpg" %}" alt="Бесплатная доставка"/></picture>
               </div>
-            {% endfor %}
+            </div>
+            <div class="promo__slider-slide">
+              <div class="">
+                <picture><img src="{% static "img/baner2.jpg" %}" alt="Бесплатная доставка"/></picture>
+              </div>
+            </div>
+            <div class="promo__slider-slide">
+              <div class="">
+                <picture><img src="{% static "img/baner3.jpg" %}" alt="Бесплатная доставка"/></picture>
+              </div>
+            </div>
           </div>
           <!-- Promo Slider > Controls -->
           <div class="promo__slider-controls slick-controls">
@@ -169,91 +176,65 @@
             </div>
           </section>
 
-          <section class="section tabs">
-            <div class="container">
-              <div class="tabs__head">
-                <p class="tabs__title section__title">Топ товаров</p>
-                <!-- ========== Tabs > Nav ========== --></div>
-              <!-- ========== Tabs > Content ========== -->
-
-              <div class="tabs__content"><!-- ========== Tabs > Tab ========== -->
-                <div class="tabs__tab"><!-- ========== Product Slider ========== -->
-                  <div class="products-slider">{% for i in popular_products %}
-                    <div class="products-slider__slide">
-                      <div class="product-card"><a class="product-card__image" href="{{ i.get_absolute_url }}"><img
-                          alt="IC Mifare карта IC-S50" src="{{ i.productimage_set.first.img.url }}"/> </a>
-
-                        <div class="product-card__content"><a class="product-card__title"
-                                                              href="{{ i.get_absolute_url }}">{{ i.title }}</a>
-
-                          <div class="product-card__status ">В наявності</div>
-
-                          <div class="product-card__price"><span class="current">{{ i.price }} ₴</span></div>
-
-                          <div class="product-card__buttons"><a
-                              class="product-card__buy btn-red-out remarketing_cart_button"
-                              href="{% url 'cart:cart_add' i.id %}">В кошик</a></div>
-                        </div>
-                      </div>
-                    </div>
-                  {% endfor %} <!-- Product Card --> <!-- Products Slider > Controls -->
-
-                    <div class="slick-controls">
-                      <div class="slick-controls__dots"></div>
-
-                      <div class="slick-controls__arrows"></div>
-                    </div>
-                  </div>
-                  <!-- ========== /.Product Slider ========== --></div>
-                <!-- ========== /.Tabs > Tab ========== --></div>
-            </div>
-          </section>
-
-          {% if recently_viewed %}
+          {% if popular_products %}
             <section class="section tabs">
               <div class="container">
                 <div class="tabs__head">
-                  <p class="tabs__title section__title">Раніше переглянуті</p>
-                  <!-- ========== Tabs > Nav ========== --></div>
+                  <p class="tabs__title section__title">Нещодавно переглянуто</p>
+                  <!-- ========== Tabs > Nav ========== -->
+                </div>
                 <!-- ========== Tabs > Content ========== -->
-
-                <div class="tabs__content"><!-- ========== Tabs > Tab ========== -->
-                  <div class="tabs__tab"><!-- ========== Product Slider ========== -->
-                    <div class="products-slider">{% for i in recently_viewed %}
-                      <div class="products-slider__slide">
-                        <div class="product-card"><a class="product-card__image" href="{{ i.get_absolute_url }}"><img
-                            alt="{{ i.title }}" src="{{ i.productimage_set.first.img.url }}"/> </a>
-
-                          <div class="product-card__content"><a class="product-card__title"
-                                                                href="{{ i.get_absolute_url }}">{{ i.title }}</a>
-
-                            <div class="product-card__status ">В наявності</div>
-
-                            <div class="product-card__price"><span class="current">{{ i.price }} ₴</span></div>
-
-                            <div class="product-card__buttons"><a
-                                class="product-card__buy btn-red-out remarketing_cart_button"
-                                href="{% url 'cart:cart_add' i.id %}">В кошик</a></div>
+                <div class="tabs__content">
+                  <!-- ========== Tabs > Tab ========== -->
+                  <div class="tabs__tab">
+                    <!-- ========== Product Slider ========== -->
+                    <div class="products-slider">
+                      {% for i in popular_products %}
+                        <div class="products-slider__slide">
+                          <div class="product-card">
+                            <a href="{{ i.get_absolute_url }}"
+                               class="product-card__image">
+                              <img src="{{ i.productimage_set.first.img.url }}"
+                                   alt="{{ i.title }}">
+                            </a>
+                            <div class="product-card__content">
+                              <a href="{{ i.get_absolute_url }}"
+                                 class="product-card__title">{{ i.title }}</a>
+                              <div class="product-card__status ">В наявності</div>
+                              <div class="product-card__price">
+                                <span class="current">{{ i.price }} ₴</span>
+                              </div>
+                              <div class="product-card__buttons">
+                                <a href=""
+                                   class="product-card__buy btn-red-out remarketing_cart_button"
+                                   tabindex="0">В
+                                  кошик</a>
+                                <a class="product-card__btn product-card__btn--whishlist icon-whishlist"
+                                   tabindex="0"></a>
+                                <a class="product-card__btn product-card__btn--compare icon-compare"
+                                   tabindex="0"></a>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    {% endfor %} <!-- Product Card --> <!-- Products Slider > Controls -->
-
-                      <div class="slick-controls">
-                        <div class="slick-controls__dots"></div>
-
-                        <div class="slick-controls__arrows"></div>
-                      </div>
+                      {% endfor %}
                     </div>
-                    <!-- ========== /.Product Slider ========== --></div>
-                  <!-- ========== /.Tabs > Tab ========== --></div>
+                    <!-- Product Card -->
+                    <!-- Products Slider > Controls -->
+                    <div class="slick-controls">
+                      <div class="slick-controls__dots"></div>
+                      <div class="slick-controls__arrows"></div>
+                    </div>
+                  </div>
+                  <!-- ========== /.Product Slider ========== -->
+                </div>
+                <!-- ========== /.Tabs > Tab ========== -->
               </div>
+            </div>
             </section>
           {% endif %}
-
-        </article>
-      </div>
+      </article>
+    </div>
     </div>
   </main>
-
-  <p>{% endblock %}</p>
+{% endblock %}
