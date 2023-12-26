@@ -1,8 +1,8 @@
-from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from mainapp.models import Product, TopCategory, Category
+from mainapp.services import all_objects, get_popular_products, get_product_in_category, get_filter_objects
 
 
 class BaseListView(ListView):
@@ -15,8 +15,9 @@ class BaseListView(ListView):
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['top_category'] = TopCategory.objects.all()
-        context['categories'] = Category.objects.filter(top_category=None)
+        context['top_category'] = all_objects(TopCategory)
+        context['popular_products'] = get_popular_products(limit=12)
+
         return context
 
 
@@ -35,6 +36,7 @@ class ProductDetailView(DetailView):
         context['top_category'] = top_category
         return context
 
+
 class CategoryListView(ListView):
     """
     Displaying a list of products by category
@@ -47,11 +49,13 @@ class CategoryListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         top_category_slug = self.kwargs.get('top_category_slug')
-        product_count = Product.objects.filter(category__slug=self.kwargs['category_slug']).count()
-        top_category = TopCategory.objects.all()
+        category_slug = self.kwargs.get('category_slug')
+        product_count = get_product_in_category(category_slug).count()
+        top_category = all_objects(TopCategory)
+        category_slug = self.kwargs['category_slug']
 
         context['top_category'] = top_category
-        context['product_list'] = Product.objects.filter(category__slug=self.kwargs['category_slug'])
+        context['product_list'] = get_product_in_category(category_slug)
         context['product_count'] = product_count
         context['top_category_slug'] = top_category_slug
         context['category_slug'] = self.kwargs['category_slug']
@@ -60,4 +64,4 @@ class CategoryListView(ListView):
     def get_queryset(self):
         category_slug = self.kwargs.get('category_slug')
         category = get_object_or_404(Category, slug=category_slug)
-        return Product.objects.filter(category=category)
+        return get_filter_objects(Product, category=category)
