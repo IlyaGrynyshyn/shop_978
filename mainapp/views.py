@@ -34,6 +34,9 @@ class ProductDetailView(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         top_category = all_objects(TopCategory)
+        product = self.get_object()
+        product.views += 1
+        product.save()
         context['top_category'] = top_category
         return context
 
