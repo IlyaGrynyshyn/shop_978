@@ -17,10 +17,10 @@
                         <a href="{% url 'home' %}"><span>Головна</span></a>
                     </li>
                     <li>
-                        <a><span> {{ top_category_slug }}</span></a>
+                        <a><span> {{ top_category_title }}</span></a>
                     </li>
                     <li>
-                        <a href="{{ category_slug.get_absolute_url }}"><span>{{ category_slug.title }}</span></a>
+                        <a href="{{ category_title.get_absolute_url }}"><span>{{ category_title.title }}</span></a>
                     </li>
                 </ol>
             </div>
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-8 col-xl-7">
                     <h1 class="catalog-head__title section__title">
-                        <span class="catalog-head__title-text">{{ category_slug.title }} ({{ product_count }})</span>
+                        <span class="catalog-head__title-text">{{ category_title }} ({{ product_count }})</span>
                     </h1>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <section class="section">
                 <div class="container">
                     <div class="catalog-products">
-                        {% for product in product_list %}
+                        {% for product in page_obj %}
                             <div class="col-lg-3">
                                 <div class="productsticker">
                                     {% if product.tag %}
