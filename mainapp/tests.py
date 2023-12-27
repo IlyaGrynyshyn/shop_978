@@ -1,11 +1,10 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import Product, Category, TopCategory
-from .views import BaseListView, ProductDetailView, CategoryListView
+from mainapp.models import Product, Category, TopCategory
 
 class TestBaseListView(TestCase):
     def test_base_list_view(self):
-        response = self.client.get(reverse('home'))  # Предполагается, что есть URL с именем 'mainpage'
+        response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mainapp/mainpage.html')
         self.assertTrue('products' in response.context)
@@ -34,7 +33,7 @@ class TestProductDetailView(TestCase):
             ordered=0,
             popular=1
         )
-        self.url = reverse('product_detail', kwargs={'product_slug': self.product.slug})  # Предполагается, что есть URL с именем 'product-detail'
+        self.url = reverse('product_detail', kwargs={'product_slug': self.product.slug})
 
     def test_product_detail_view(self):
         response = self.client.get(self.url)
@@ -54,7 +53,7 @@ class TestCategoryListView(TestCase):
             title="Test Category",
             slug="test-category"
         )
-        self.url = reverse('category_detail', kwargs={'top_category_slug': self.top_category.slug,'category_slug': self.category.slug})  # Предполагается, что есть URL с именем 'category-list'
+        self.url = reverse('category_detail', kwargs={'top_category_slug': self.top_category.slug,'category_slug': self.category.slug})
 
     def test_category_list_view(self):
         response = self.client.get(self.url)
