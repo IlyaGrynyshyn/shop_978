@@ -1,55 +1,57 @@
 {% load static %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const headerCatalog = document.querySelector('.header1__catalog');
+    document.addEventListener('DOMContentLoaded', function () {
+        const headerCatalog = document.querySelector('.header1__catalog');
 
-    if (headerCatalog) {
-        headerCatalog.addEventListener('mouseover', function() {
-            headerCatalog.classList.add('active');
-        });
+        if (headerCatalog) {
+            headerCatalog.addEventListener('mouseover', function () {
+                headerCatalog.classList.add('active');
+            });
 
-        headerCatalog.addEventListener('mouseout', function() {
-            headerCatalog.classList.remove('active');
-        });
-    }
-});
+            headerCatalog.addEventListener('mouseout', function () {
+                headerCatalog.classList.remove('active');
+            });
+        }
+    });
 
 </script>
 
 <div class="header__bottom">
-    <div class="container">
-      <div class="row"><!-- Header > Catalog button -->
-        <div class="col-lg-3 position-none">
-          <div class="header1__catalog active">
-            <div class="header__catalog-shadow"></div>
-            <a class="header__catalog-btn btn-red" href="">
-              <picture>
-                <source srcset="{% static 'icon/menu.svg' %}" type="image/webp"/>
-                <img alt="" src="{% static 'icon/menu.svg' %}"/></picture>
-              <span>Каталог товаров</span> </a> <!-- =========== Header Catalog =========== -->
+  <div class="container">
+    <div class="row"><!-- Header > Catalog button -->
+      <div class="col-lg-3 position-none">
+        <div class="header1__catalog">
+          <div class="header__catalog-shadow"></div>
+          <a class="header__catalog-btn btn-red" href="">
+            <picture>
+              <source srcset="{% static 'icon/menu.svg' %}" type="image/webp"/>
+              <img alt="" src="{% static 'icon/menu.svg' %}"/></picture>
+            <span>Каталог товарів</span> </a> <!-- =========== Header Catalog =========== -->
 
-            <div class="header__catalog-menu">
-              <ul>
-                {% for i in top_category %}
-                  <li>
-                    <a href="">
+          <div class="header__catalog-menu">
+            <ul>
+              {% for i in top_category %}
+                <li>
+                  <a href="">
+                    {% if i.category_icon %}
                       <img class="menucust_icon" src="{{ i.category_icon.url }}" alt=""/>
-                      <span>{{ i.title }}</span></a>
-                    <ul>
-                      {% for cat in i.category_set.all %}
-                        <li>
-                          <a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </li>
-                {% endfor %}
-{#                <li><a href=""> <span>Усі категорія</span></a></li>#}
-              </ul>
-            </div>
+                    {% endif %}
+                    <span>{{ i.title }}</span></a>
+                  <ul>
+                    {% for cat in i.category_set.all %}
+                      <li>
+                        <a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endfor %}
+              {#                <li><a href=""> <span>Усі категорія</span></a></li>#}
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

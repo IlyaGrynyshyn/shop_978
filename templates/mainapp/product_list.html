@@ -17,10 +17,10 @@
                         <a href="{% url 'home' %}"><span>Головна</span></a>
                     </li>
                     <li>
-                        <a><span> {{ top_category_slug }}</span></a>
+                        <a><span> {{ top_category_title }}</span></a>
                     </li>
                     <li>
-                        <a href="{{ category_slug.get_absolute_url }}"><span>{{ category_slug.title }}</span></a>
+                        <a href="{{ category_title.get_absolute_url }}"><span>{{ category_title.title }}</span></a>
                     </li>
                 </ol>
             </div>
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-8 col-xl-7">
                     <h1 class="catalog-head__title section__title">
-                        <span class="catalog-head__title-text">{{ category_slug.title }} ({{ product_count }})</span>
+                        <span class="catalog-head__title-text">{{ category_title }} ({{ product_count }})</span>
                     </h1>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <section class="section">
                 <div class="container">
                     <div class="catalog-products">
-                        {% for product in product_list %}
+                        {% for product in page_obj %}
                             <div class="col-lg-3">
                                 <div class="productsticker">
                                     {% if product.tag %}
@@ -63,7 +63,7 @@
                                              alt="{{ product.title }}">
                                     </a>
                                     <div class="product-card__content">
-                                        <a href=""
+                                        <a href="{{ product.get_absolute_url }}"
                                            class="product-card__title">{{ product.title }}</a>
                                         <div class="product-card__status ">В наявності</div>
                                         <div class="product-card__price">
@@ -140,46 +140,6 @@
                                             {% endif %}
                 </div>
             </section>
-            <div class="catalog-tops">
-                <!-- ===================== Топ товаров =====================-->
-                <section class="section">
-                    <div class="container">
-                        <h2 class="section__title">Нещодавно переглянуті</h2>
-                        <!-- ========== Product Slider ========== -->
-                        <div class="products-slider products-slider--1">
-                            {% for i in recently_viewed %}
-                                <div class="products-slider__slide">
-                                    <div class="product-card">
-                                        <a href="{{ i.get_absolute_url }}" class="product-card__image">
-                                            <img src="{{ i.productimage_set.first.img.url }}"
-                                                 alt="{{ i.title }}">
-                                        </a>
-                                        <div class="product-card__content">
-                                            <a href="{{ i.get_absolute_url }}"
-                                               class="product-card__title">{{ i.title }}</a>
-                                            <div class="product-card__status ">В наявності</div>
-                                            <div class="product-card__price">
-                                                <span class="current">{{ i.price }} ₴</span>
-                                            </div>
-                                            <div class="product-card__buttons">
-                                                <a href=""
-                                                   class="product-card__buy btn-red-out remarketing_cart_button"
-                                                   tabindex="0">В
-                                                    кошик</a>
-                                                <a class="product-card__btn product-card__btn--whishlist icon-whishlist"
-                                                   tabindex="0"></a>
-                                                <a class="product-card__btn product-card__btn--compare icon-compare"
-                                                   tabindex="0"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <!-- ========== /.Product Slider ========== -->
-                    </div>
-                </section>
-            </div>
             <section class="section info">
                 <div class="container">
                     <div class="row">
@@ -190,90 +150,12 @@
                     </div>
                 </div>
             </section>
-            <script>
-                $("[data-view]").click(function () {
-                    $(this).addClass("active").siblings().removeClass("active");
-                    if ($(this).data("view") == "row") {
-                        $(".catalog-products").addClass("catalog-view--row");
-                    } else {
-                        $(".catalog-products").removeClass("catalog-view--row");
-                    }
-                    return false;
-                });
-                $(document).on('click', '.vch', function () {
-                    if ($(this).hasClass('active')) {
-                        $(this).find('input').prop('checked', false);
-
-                        $(this).removeClass('active');
-                        //  console.log(location.href.replace(\/nalichie/g, ''));
-                        location = location.href.replace(/nalichie/g, '');
-                    } else {
-                        $(this).find('input').prop('checked', true);
-                        // console.log(location.href + 'nalichie');
-                        $(this).addClass('active');
-                        location = location.href + 'nalichie';
-                    }
-                    return false;
-                });
-                $(window).on('load', function () {
-                    if ($('[name="qnts[1]"]').next().hasClass('actionis')) {
-                        $('.vch').addClass('active');
-                        $('.vch').find('input').prop('checked', true);
-
-                    }
-                });
-            </script>
         </article>
-        </div>
         </div>
     </main>
     <div class="ts-mw-substrate"></div>
-    <script>
-        $('.ts-mw-icon').click(function () {
-            $('#ts-mw-id').toggleClass('open');
-            $('.ts-mw-substrate').toggleClass('active');
-        });
-        $('.ts-mw-li a').click(function () {
-            $('#ts-mw-id').removeClass('open');
-            $('.ts-mw-substrate').removeClass('active');
-        });
-        $('.ts-mw-substrate').click(function () {
-            $('#ts-mw-id').removeClass('open');
-            $('.ts-mw-substrate').removeClass('active');
-        });
-    </script>
-    <script src="{% static 'js/nouislider.min.js' %}"></script>
-    <script>
-        let price__slider = document.getElementById("filter-price__slider");
-        let price__min = document.getElementById("price-range_min");
-        let price__max = document.getElementById("price-range_max");
-        console.log()
-        noUiSlider.create(price__slider, {
 
-            start: [parseInt(price__min.getAttribute("min")), parseInt(price__max.getAttribute("max"))],
-            connect: true,
-            step: 1,
-            range: {
-                'min': parseInt(price__min.getAttribute("min")),
-                'max': parseInt(price__max.getAttribute("max"))
-            }
-        });
-        price__slider.noUiSlider.on('update', function (values, handle) {
-            var value = values[handle];
-            if (handle) {
-                price__max.value = Math.round(value);
-            } else {
-                price__min.value = Math.round(value);
-            }
-        });
-        price__min.addEventListener('change', function () {
-            price__slider.noUiSlider.set([this.value, null]);
-        });
-        price__max.addEventListener('change', function () {
-            price__slider.noUiSlider.set([null, this.value]);
-        });
 
-    </script>
 
     <div id="mobil_mini"><i class="fa fa-times"></i></div>
 
