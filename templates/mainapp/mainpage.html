@@ -4,7 +4,6 @@
   {% include "includes/catagory_catalog.html" %}
   <!-- ===================== /.Header =====================-->
   <!-- ===================== Mobile Menu / Mobile Catalog =====================-->
-
   <div class="mobile-menu mobile-menu--hide">
     <div class="mobile-menu__wrapper">
       <div class="mobile-menu__content"><a class="mobile-menu__logo" href="{% url 'home' %}">
@@ -16,13 +15,12 @@
                                            href="">Вхід</a> <a
             class="mobile-menu__login--register" href="">Реєстрація</a></div>
         <!-- Mobile Menu > Catalog -->
-
         <ul class="mobile-menu__catalog">
           <li><a id="mobmenu"><span>Каталог товарів</span></a>
-
             <ul>
               <li>{% for i in top_category %}</li>
-                <li><a> <img class="menucust_icon" src="{{ i.category_icon.url }}" alt="{{ i.title }}"/> <span>{{ i.title }}</span></a>
+                <li><a> <img class="menucust_icon" src="{{ i.category_icon.url }}" alt="{{ i.title }}"/>
+                  <span>{{ i.title }}</span></a>
                   <ul>
                     <li>{% for cat in i.category_set.all %}</li>
                       <li><a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a></li>
@@ -34,17 +32,14 @@
           </li>
         </ul>
         <!-- Mobile Menu > Actions -->
-
         <div class="mobile-menu__actions"><a class="mobile-menu__actions--whishlist"
                                              href="">Закладки</a><a
             class="mobile-menu__actions--cart" href="">Корзина</a></div>
         <!-- Mobile Menu > Contacts -->
-
         <div class="mobile-menu__contacts"><a class="callback js-callback-popup" data-target="#orderModal">Зворотній
           зв'язок</a> <a class="email" href="#">info@978.com.ua</a> <a class="phone" href="tel:++38(055)55-55-05">+38(999)440-20-10</a>
         </div>
         <!-- Mobile Menu > Menu -->
-
         <ul class="mobile-menu__menu">
           <li><a href="dostavka-oplata"><span>Оплата й доставка</span></a></li>
           <li><a href="contact-us"><span>Контакти</span></a></li>
@@ -88,7 +83,6 @@
     </div>
   </section>
   <!-- ===================== /.Promo Section =====================-->
-
   <section class="section advantages">
     <div class="container">
       <div class="row">
@@ -96,11 +90,9 @@
           <div class="advantages__item">
             <div class="advantages__item-content">
               <p class="advantages__item-title">Доставка</p>
-
               <p class="advantages__item-description">Доставка за адресою курєром або в вказане відділення &ldquo;Нова
                 Пошта&rdquo;</p>
             </div>
-
             <div class="advantages__item-icon">
               <picture>
                 <source srcset="{% static 'icon/delivery.svg' %}" type="image/webp"/>
@@ -108,7 +100,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-lg-3">
           <div class="advantages__item">
             <div class="advantages__item-content">
@@ -180,7 +171,7 @@
             <section class="section tabs">
               <div class="container">
                 <div class="tabs__head">
-                  <p class="tabs__title section__title">Нещодавно переглянуто</p>
+                  <p class="tabs__title section__title">Топ товарів</p>
                   <!-- ========== Tabs > Nav ========== -->
                 </div>
                 <!-- ========== Tabs > Content ========== -->
@@ -230,11 +221,10 @@
                 </div>
                 <!-- ========== /.Tabs > Tab ========== -->
               </div>
-            </div>
             </section>
+            </article>
+            </div>
           {% endif %}
-      </article>
-    </div>
     </div>
   </main>
 {% endblock %}
