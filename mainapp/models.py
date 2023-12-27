@@ -61,7 +61,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Description', null=True, blank=True)
     qty_product = models.IntegerField(default=0, verbose_name='Quantity of product')
     ordered = models.IntegerField(default=0, verbose_name='Ordered times')
-    popular = models.IntegerField(default=0, verbose_name='Viewed times')
+    views = models.IntegerField(default=0, verbose_name='Viewed times')
 
     def __str__(self):
         return self.title
