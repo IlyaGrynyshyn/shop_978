@@ -17463,7 +17463,7 @@ exchange .login-section .row {
 article.catalog_main__article {
     padding-left: 15px;
     padding-right: 0;
-    width: calc(100% - 340px);
+    /*width: calc(100% - 340px);*/
 }
 
 @media only screen and (max-width: 1440px) {
