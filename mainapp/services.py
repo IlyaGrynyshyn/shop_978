@@ -19,7 +19,7 @@ def get_filter_objects(model, **kwargs) -> QuerySet:
 
 
 def get_popular_products(limit: int) -> QuerySet:
-    return all_objects(Product).order_by('-popular')[:limit]
+    return all_objects(Product).order_by('-views')[:limit]
 
 
 def get_product_in_category(category_slug: str) -> QuerySet:
