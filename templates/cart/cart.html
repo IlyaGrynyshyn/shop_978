@@ -85,8 +85,10 @@
                             </div>
                           </div>
                         </div>
-                        <div href="{% url 'cart:cart_remove' product.id %}"
-                             class="cart-item__remove"></div>
+                        <div>
+                          <a href="{% url 'cart:cart_remove' product.id %}"
+                             class="cart-item__remove"></a>
+                        </div>
                       </div>
                     {% endwith %}
                   {% endfor %}
