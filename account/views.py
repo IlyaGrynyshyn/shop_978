@@ -7,10 +7,16 @@ from django.contrib.auth import views, logout
 
 from account.forms import CustomerRegistrationForm
 from account.models import Customer
+from cart.services import Cart
 
 
 class CustomerLoginView(views.LoginView):
     success_url = reverse_lazy("account:profile")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = Cart(self.request)
+        return context
 
 
 class CustomerRegistrationView(FormView):
@@ -23,13 +29,23 @@ class CustomerRegistrationView(FormView):
             form.save(commit=True)
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = Cart(self.request)
+        return context
+
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
-    model=Customer
+    model = Customer
     template_name = 'account/profile.html'
 
     def get_object(self, queryset=None):
         return self.request.user.username
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = Cart(self.request)
+        return context
 
 
 @login_required(login_url="account:login")

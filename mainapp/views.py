@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
 
+from cart.services import Cart
 from mainapp.models import Product, TopCategory, Category
 from mainapp.services import all_objects, get_popular_products, get_product_in_category, get_filter_objects, get_object
 
@@ -18,7 +19,7 @@ class BaseListView(ListView):
         context = super().get_context_data(**kwargs)
         context['top_category'] = all_objects(TopCategory)
         context['popular_products'] = get_popular_products(limit=12)
-
+        context['cart'] = Cart(self.request)
         return context
 
 
@@ -38,6 +39,8 @@ class ProductDetailView(DetailView):
         product.views += 1
         product.save()
         context['top_category'] = top_category
+        context['cart'] = Cart(self.request)
+        context['popular_products'] = get_popular_products(limit=12)
         return context
 
 
@@ -67,4 +70,5 @@ class CategoryListView(ListView):
         context['product_count'] = product_count
         context['top_category_title'] = get_object(TopCategory, slug=top_category_slug)
         context['category_title'] = get_object(model=self.model, slug=category_slug)
+        context['cart'] = Cart(self.request)
         return context
