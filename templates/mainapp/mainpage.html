@@ -31,7 +31,6 @@
                     </ul>
                   </li>
                 {% endfor %}
-                {#                <li><a href=""> <span>Усі категорія</span></a></li>#}
               </ul>
             </div>
           </div>
@@ -233,7 +232,7 @@
                                 <span class="current">{{ i.price }} ₴</span>
                               </div>
                               <div class="product-card__buttons">
-                                <a href=""
+                                <a href="{% url "cart:cart_add" i.id %}"
                                    class="product-card__buy btn-red-out remarketing_cart_button"
                                    tabindex="0">В
                                   кошик</a>
@@ -246,12 +245,10 @@
                           </div>
                         </div>
                       {% endfor %}
-                    </div>
-                    <!-- Product Card -->
-                    <!-- Products Slider > Controls -->
-                    <div class="slick-controls">
-                      <div class="slick-controls__dots"></div>
-                      <div class="slick-controls__arrows"></div>
+                      <div class="slick-controls">
+                        <div class="slick-controls__dots"></div>
+                        <div class="slick-controls__arrows"></div>
+                      </div>
                     </div>
                   </div>
                   <!-- ========== /.Product Slider ========== -->
