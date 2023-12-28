@@ -1,6 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Alegreya:400,500,700,800,900|Poppins:200,300,400,500,600,700,800,900&display=swap);
-@import url('https://fonts.googleapis.com/css2?family=Khand:wght@500&display=swap');
-
 @media only screen and (min-width: 1200px) {
     .container {
         max-width: 1200px
@@ -435,7 +432,6 @@ input:focus {
 
   animation-duration: 22s;
 
-  background-color: rgba(white, 0.3); /* fade(white, 25%); */
 }
 .s-container li:nth-child(5){
   left: 70%;
@@ -446,7 +442,6 @@ input:focus {
   height: 120px;
 
   animation-delay: 3s;
-  background-color: rgba(white, 0.2); /* fade(white, 20%); */
 }
 .s-container li:nth-child(7){
   left: 32%;
@@ -470,7 +465,6 @@ input:focus {
 
   animation-delay: 2s;
   animation-duration: 40s;
-  background-color: rgba(white, 0.3); /*fade(white, 30%);*/
 }
 .s-container li:nth-child(10){
   left: 90%;
