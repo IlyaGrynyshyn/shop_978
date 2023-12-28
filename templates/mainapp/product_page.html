@@ -161,14 +161,15 @@
                         height="auto" alt="product1"></div>
                   {% endfor %}
                 </div>
-                <div class="b-product-db-photos-slider-thumbs">
-                  {% for i in product.productimage_set.all %}
-                    <div class="b-item"><img
-                        src="{{ i.img.url }}"
-                        height="auto" alt="product1"></div>
-                  {% endfor %}
-
-                </div>
+                {% if product.productimage_set.count >= 2 %}
+                  <div class="b-product-db-photos-slider-thumbs">
+                    {% for i in product.productimage_set.all %}
+                      <div class="b-item"><img
+                          src="{{ i.img.url }}"
+                          height="auto" alt="product1"></div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
               </div><!-- /.b-product-db-photos -->
               <div class="b-product-mpr-info-for-mobile">
                 <div class="b-product-mpr-info">
@@ -185,7 +186,7 @@
                     </div>
                   {% endif %}
                   <div class="b-i-product-wrap-price">
-                    <a href=""
+                    <a href="{% url 'cart:cart_add' product.id %}"
                        class="b-link-add2bas b-link-add2bas-already-add ">У кошику</a>
                   </div>
                 </div>
@@ -201,20 +202,12 @@
                     <div class="b-i-product-available b-i-product-available-green">Є в наявності
                     </div>
                     <div class="b-i-product-mid-meta-color"></div>
-                    {% if product.new_price %}
-                      <div class="b-i-product-old-price">
-                        <span> {{ product.price }} <i>грн</i></span>
-                      </div>
-                      <div class="b-price">{{ product.new_price }} <i>грн</i></div>
-                    {% else %}
-                      <div class="b-price"><span>{{ product.price }} <i>грн</i></span>
-                      </div>
-                    {% endif %}
+                    <div class="b-price"><span>{{ product.price }} <i>грн</i></span></div>
                   </div>
                   <div class="b-pmi-col-right">
                     <div class="b-i-product-wrap-price">
                       <a class="b-link-add2bas b-link-add2bas-already-add "
-                         href="">У кошику</a>
+                         href="{% url 'cart:cart_add' product.id %}">У кошику</a>
                     </div>
                   </div>
                 </div><!-- /.b-pmi-cols -->
@@ -236,105 +229,72 @@
               </div>
             </div><!-- /.b-product-wtbox -->
           </div>
-
         </div><!-- /.b-product-drow -->
       </div>
-      <div class="b-content">
-        <div class="b-wrap-ptech-chars c-active" id="secChars">
-          <div class="b-product-mob-title">Характеристики</div>
-          <div class="b-product-mob-body">
-            <h2 class="b-ptech-chars-head">Технічні характеристики <span
-                class="b-ptech-chars-head-product-name">{{ product.title }}</span>
-            </h2>
-            <div class="row b-tech-chars-row" id="productFeaturesList">
-              <div class="col-lg-12 col-md-12 col-sm-12" itemprop="description">
-                <div class="b-ptech-param-head">Процесор</div>
-                <table class="b-ptech-param-table">
-                  <tbody>
-                  {% for f_name, f_value in product.get_features.items %}
-                    <tr>
-                      <td class="b-ptech-pt-label">
-                        {{ f_name }}
-                      </td>
-                      <td class="b-ptech-pt-value 1510 ">
-                        <a target="_blank">
-                          {{ f_value }}</a>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      <div class="text-section__block">
+        <h2 class="ph4">Опис {{ product.title }}</h2>
+        <div>
+          <div id="full_text">
+            {{ product.description|safe }}
           </div>
-        </div><!-- /.b-wrap-ptech-chars -->
-        {#                <div class="text-section__block">#}
-        {#                    <h2 class="ph4">Опис {{ product.title }}</h2>#}
-        {#                    <div>#}
-        {#                        <div id="full_text">#}
-        {#                            {{ product.description|safe }}#}
-        {#                        </div>#}
-        {#                    </div>#}
-        {#                </div>#}
-        <div class="b-related-products c-active">
-          <div class="b-product-mob-body">
-            {% if recently_viewed %}
-              <section class="section tabs">
-                <div class="container">
-                  <div class="tabs__head">
-                    <p class="tabs__title section__title">Нещодавно переглянуто</p>
-                    <!-- ========== Tabs > Nav ========== -->
-                  </div>
-                  <!-- ========== Tabs > Content ========== -->
-                  <div class="tabs__content">
-                    <!-- ========== Tabs > Tab ========== -->
-                    <div class="tabs__tab">
-                      <!-- ========== Product Slider ========== -->
-                      <div class="products-slider">
-                        {% for i in recently_viewed %}
-                          <div class="products-slider__slide">
-                            <div class="product-card">
+        </div>
+      </div>
+      <div class="b-related-products c-active">
+        <div class="b-product-mob-body">
+          {% if popular_products %}
+            <section class="section tabs">
+              <div class="container">
+                <div class="tabs__head">
+                  <p class="tabs__title section__title">Топ товарів</p>
+                  <!-- ========== Tabs > Nav ========== -->
+                </div>
+                <!-- ========== Tabs > Content ========== -->
+                <div class="tabs__content">
+                  <!-- ========== Tabs > Tab ========== -->
+                  <div class="tabs__tab">
+                    <!-- ========== Product Slider ========== -->
+                    <div class="products-slider">
+                      {% for i in popular_products %}
+                        <div class="products-slider__slide">
+                          <div class="product-card">
+                            <a href="{{ i.get_absolute_url }}"
+                               class="product-card__image">
+                              <img src="{{ i.productimage_set.first.img.url }}"
+                                   alt="{{ i.title }}">
+                            </a>
+                            <div class="product-card__content">
                               <a href="{{ i.get_absolute_url }}"
-                                 class="product-card__image">
-                                <img src="{{ i.productimage_set.first.img.url }}"
-                                     alt="{{ i.title }}">
-                              </a>
-                              <div class="product-card__content">
-                                <a href="{{ i.get_absolute_url }}"
-                                   class="product-card__title">{{ i.title }}</a>
-                                <div class="product-card__status ">В наявності</div>
-                                <div class="product-card__price">
-                                  <span class="current">{{ i.price }} ₴</span>
-                                </div>
-                                <div class="product-card__buttons">
-                                  <a href="{% url 'cart:cart_add' i.id %}"
-                                     class="product-card__buy btn-red-out remarketing_cart_button"
-                                     tabindex="0">В
-                                    кошик</a>
-                                  <a class="product-card__btn product-card__btn--whishlist icon-whishlist"
-                                     tabindex="0"></a>
-                                  <a class="product-card__btn product-card__btn--compare icon-compare"
-                                     tabindex="0"></a>
-                                </div>
+                                 class="product-card__title">{{ i.title }}</a>
+                              <div class="product-card__status ">В наявності</div>
+                              <div class="product-card__price">
+                                <span class="current">{{ i.price }} ₴</span>
+                              </div>
+                              <div class="product-card__buttons">
+                                <a href="{% url "cart:cart_add" i.id %}"
+                                   class="product-card__buy btn-red-out remarketing_cart_button"
+                                   tabindex="0">В
+                                  кошик</a>
+                                <a class="product-card__btn product-card__btn--whishlist icon-whishlist"
+                                   tabindex="0"></a>
+                                <a class="product-card__btn product-card__btn--compare icon-compare"
+                                   tabindex="0"></a>
                               </div>
                             </div>
                           </div>
-                        {% endfor %}
-                        <!-- Product Card -->
-                        <!-- Products Slider > Controls -->
-                        <div class="slick-controls">
-                          <div class="slick-controls__dots"></div>
-                          <div class="slick-controls__arrows"></div>
                         </div>
+                      {% endfor %}
+                      <div class="slick-controls">
+                        <div class="slick-controls__dots"></div>
+                        <div class="slick-controls__arrows"></div>
                       </div>
-                      <!-- ========== /.Product Slider ========== -->
                     </div>
-                    <!-- ========== /.Tabs > Tab ========== -->
                   </div>
+                  <!-- ========== /.Product Slider ========== -->
                 </div>
-              </section>
-            {% endif %}
-          </div>
+                <!-- ========== /.Tabs > Tab ========== -->
+              </div>
+            </section>
+          {% endif %}
         </div>
       </div>
     </div>
