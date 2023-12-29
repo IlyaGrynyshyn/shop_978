@@ -4,6 +4,9 @@ from mainapp.models import Product
 from cart.services import Cart
 
 class CartAddView(View):
+    """
+    View for adding a product to the cart.
+    """
     def get(self, request, product_id):
         cart = Cart(request)
         product = get_object_or_404(Product, id=product_id)
@@ -11,6 +14,9 @@ class CartAddView(View):
         return redirect('cart:cart_detail')
 
 class CartRemoveView(View):
+    """
+    View for removing a product from the cart.
+    """
     def get(self, request, product_id):
         cart = Cart(request)
         product = get_object_or_404(Product, id=product_id)
@@ -18,6 +24,9 @@ class CartRemoveView(View):
         return redirect('cart:cart_detail')
 
 class AddQuantityView(View):
+    """
+    View for adding quantity to a product in the cart.
+    """
     def get(self, request, product_id):
         cart = Cart(request)
         product = get_object_or_404(Product, id=product_id)
@@ -25,6 +34,9 @@ class AddQuantityView(View):
         return redirect(request.META['HTTP_REFERER'])
 
 class SubtractionQuantityView(View):
+    """
+    View for subtracting quantity from a product in the cart.
+    """
     def get(self, request, product_id):
         cart = Cart(request)
         product = get_object_or_404(Product, id=product_id)
@@ -32,6 +44,9 @@ class SubtractionQuantityView(View):
         return redirect(request.META['HTTP_REFERER'])
 
 class CartDetailView(View):
+    """
+    View for displaying cart details.
+    """
     def get(self, request):
         cart = Cart(request)
         return render(request, 'cart/cart.html', {'cart': cart})
