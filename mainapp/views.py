@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 
 from cart.services import Cart
 from mainapp.models import Product, TopCategory, Category
-from mainapp.services import all_objects, get_popular_products, get_product_in_category, get_filter_objects, get_object
+from mainapp.services import all_objects, get_objects_with_limit, get_filter_objects, get_object
 
 
 class BaseListView(ListView):
@@ -18,7 +18,7 @@ class BaseListView(ListView):
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['top_category'] = all_objects(TopCategory)
-        context['popular_products'] = get_popular_products(limit=12)
+        context['popular_products'] = get_objects_with_limit(Product, order_by="-views", limit=12)
         context['cart'] = Cart(self.request)
         return context
 
@@ -40,7 +40,7 @@ class ProductDetailView(DetailView):
         product.save()
         context['top_category'] = top_category
         context['cart'] = Cart(self.request)
-        context['popular_products'] = get_popular_products(limit=12)
+        context['popular_products'] = get_objects_with_limit(Product,order_by="views", limit=12)
         return context
 
 
@@ -63,7 +63,8 @@ class CategoryListView(ListView):
         context = super().get_context_data()
         category_slug = self.kwargs.get('category_slug')
         top_category_slug = self.kwargs.get('top_category_slug')
-        product_count = get_product_in_category(category_slug).count()
+        # product_count = get_product_in_category(category_slug).count()
+        product_count = get_filter_objects(Product, category__slug=category_slug).count()
         top_category = all_objects(TopCategory)
 
         context['top_category'] = top_category

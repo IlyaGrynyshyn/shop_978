@@ -1,9 +1,15 @@
 from django.db.models import QuerySet
 
-from mainapp.models import Product
-
 
 def all_objects(model, select_related: str = None, prefetch_related: str = None) -> QuerySet:
+    """Get all objects for a given model.
+
+     Args:
+     - model: The model for which to retrieve objects
+     - select_related: Related fields to select in the query
+     - prefetch_related: Related fields to prefetch in the query
+
+     """
     all_objects = model.objects.all()
     if select_related:
         all_objects = all_objects.select_related(select_related)
@@ -11,17 +17,32 @@ def all_objects(model, select_related: str = None, prefetch_related: str = None)
         all_objects = all_objects.prefetch_related(prefetch_related)
     return all_objects
 
+
 def get_object(model, **kwargs):
+    """
+      Get a single object of the given model based on provided criteria
+
+      Args:
+      - model: The model for which to get filtered objects
+      - **kwargs: Filtering criteria for retrieving objects
+      """
     return model.objects.get(**kwargs)
 
+
 def get_filter_objects(model, **kwargs) -> QuerySet:
+    """Retrieve filtered objects for the given model based on provided criteria.
+        Args:
+        - model: The model for which to retrieve filtered objects
+        - **kwargs: Filtering criteria for retrieving objects
+        """
     return model.objects.filter(**kwargs)
 
 
-def get_popular_products(limit: int) -> QuerySet:
-    return all_objects(Product).order_by('-views')[:limit]
-
-
-def get_product_in_category(category_slug: str) -> QuerySet:
-    product_count = Product.objects.filter(category__slug=category_slug)
-    return product_count
+def get_objects_with_limit(model, limit: int, order_by: str = None) -> QuerySet:
+    """Retrieve a limited number of objects for the given model.
+        Args:
+        - model: The model for which to retrieve objects
+        - limit: The maximum number of objects to retrieve
+        - order_by: Field to order the objects by (optional)
+        """
+    return all_objects(model).order_by(order_by)[:limit]
