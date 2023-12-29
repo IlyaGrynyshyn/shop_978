@@ -7,6 +7,9 @@ from orders.models import Order
 
 
 class OrderCreateForm(forms.ModelForm):
+    """
+    Form for creating an order
+    """
     first_name = forms.CharField(required=True,
                                  widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Введіть ім\'я'}))
     last_name = forms.CharField(

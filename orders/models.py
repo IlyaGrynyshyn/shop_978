@@ -20,6 +20,9 @@ STATUS_CHOICES = (
 
 
 class Order(models.Model):
+    """
+    Model representing an order.
+    """
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True, blank=True,
                                  verbose_name='Користувач')
     first_name = models.CharField(max_length=50, verbose_name='Ім\'я')
@@ -56,6 +59,9 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    """
+    Model representing an item in an order.
+    """
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='order_items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -65,4 +71,7 @@ class OrderItem(models.Model):
         return '{}'.format(self.id)
 
     def get_cost(self):
+        """
+        Calculates the total cost of the order item
+        """
         return self.price * self.quantity

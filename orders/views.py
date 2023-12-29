@@ -8,6 +8,10 @@ from orders.services import all_objects
 
 
 class OrderCreateView(View):
+    """
+    View for creating an order.
+    """
+
     def get(self, request):
         cart = Cart(request)
         top_categories = all_objects(TopCategory)
@@ -40,6 +44,10 @@ class OrderCreateView(View):
 
 
 class SuccessOrderView(View):
+    """
+      View for successful order placement.
+    """
+
     def get(self, request):
         cart = Cart(request)
         context = {
