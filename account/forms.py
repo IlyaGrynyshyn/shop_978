@@ -1,8 +1,14 @@
+import re
+
 from django import forms
 from account.models import Customer
 from django.contrib.auth.forms import UserCreationForm
 
+
 class CustomerRegistrationForm(UserCreationForm):
+    """
+    Form for customer registration.
+    """
     username = forms.CharField(label='Username')
     email = forms.EmailField(label='Email', max_length=255, help_text='Required. Enter a valid email address.')
     first_name = forms.CharField(label='First Name', max_length=255, required=False)
@@ -18,6 +24,9 @@ class CustomerRegistrationForm(UserCreationForm):
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
+        pattern = r'^\+38\d{10}$'
+        if not re.match(pattern, phone):
+            raise forms.ValidationError("Будь ласка, введіть коректний номер телефону у форматі +38(XXX)XXX-XXXX.")
         if Customer.objects.filter(phone=phone).exists():
             raise forms.ValidationError(
                 f'Даний номер телефону вже зареєстрований'
