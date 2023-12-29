@@ -87,24 +87,3 @@ class ProductImage(models.Model):
 
     class Meta:
         ordering = ['-id']
-
-
-class Banner(models.Model):
-    """
-    Model representing banners.
-    """
-    image = models.ImageField(upload_to=content_file_name)
-    slug = models.SlugField()
-    title = models.CharField(max_length=155)
-    subtitle = models.CharField(max_length=155)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'banner_slug': self.slug})
-
-    class Meta:
-        verbose_name = 'Banner'
-        verbose_name_plural = 'Banners'
-        ordering = ['-id']
