@@ -31,7 +31,7 @@ class TestProductDetailView(TestCase):
             description="test description",
             qty_product=1,
             ordered=0,
-            popular=1
+            views=1
         )
         self.url = reverse('product_detail', kwargs={'product_slug': self.product.slug})
 
