@@ -35,7 +35,6 @@ class Category(models.Model):
     top_category = models.ForeignKey(TopCategory, verbose_name='Parent category', on_delete=models.CASCADE)
     title = models.CharField(max_length=50, verbose_name="Name of the category")
     slug = models.SlugField(unique=True, db_index=True)
-    vendor_code = models.BigIntegerField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.title
