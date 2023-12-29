@@ -1,4 +1,7 @@
+import re
+
 from django import forms
+from django.core.exceptions import ValidationError
 
 from orders.models import Order
 
@@ -27,6 +30,19 @@ class OrderCreateForm(forms.ModelForm):
         self.fields['phone'].empty_label = "Обов'язкове для заповнення"
         self.fields['email'].label = "E-mail"
         self.fields['comment'].label = 'Коментарій до замовлення'
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        pattern = r'^\+38\d{10}$'
+        if not re.match(pattern, phone):
+            raise ValidationError("Будь ласка, введіть коректний номер телефону у форматі +38(XXX)XXX-XXXX.")
+        return phone
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if email and not forms.EmailField().clean(email):
+            raise ValidationError("Будь ласка, введіть коректну адресу електронної пошти.")
+        return email
 
     class Meta:
         model = Order
