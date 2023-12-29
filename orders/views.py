@@ -1,21 +1,26 @@
 from django.shortcuts import render
 from django.views import View
 from cart.services import Cart
-from mainapp.models import TopCategory, Product, Category
-from orders.models import OrderItem, Order
+from mainapp.models import TopCategory
+from orders.models import OrderItem
 from orders.forms import OrderCreateForm
+from orders.services import all_objects
 
 
 class OrderCreateView(View):
     def get(self, request):
         cart = Cart(request)
-        categories = TopCategory.objects.all()
+        top_categories = all_objects(TopCategory)
         form = OrderCreateForm()
-        return render(request, 'order/checkout.html', {'cart': cart, 'form': form, 'top_category': categories})
+        return render(
+            request,
+            'order/checkout.html',
+            {'cart': cart, 'form': form, 'top_category': top_categories}
+        )
 
     def post(self, request):
         cart = Cart(request)
-        categories = TopCategory.objects.all()
+        top_categories = all_objects(TopCategory)
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
@@ -28,16 +33,17 @@ class OrderCreateView(View):
                                          price=item['price'], quantity=item['quantity'])
 
             cart.clear()
-            return render(request, 'order/success_order.html', {'cart': cart, 'order': order, 'top_category': categories})
-        return render(request, 'order/checkout.html', {'cart': cart, 'form': form, 'top_category': categories})
+            return render(request, 'order/success_order.html',
+                          {'cart': cart, 'order': order, 'top_category': top_categories})
+        return render(request, 'order/checkout.html',
+                      {'cart': cart, 'form': form, 'top_category': top_categories})
 
 
 class SuccessOrderView(View):
     def get(self, request):
         cart = Cart(request)
-        categories = Category.objects.all()
         context = {
-            'top_category': TopCategory.objects.all(),
+            'top_category': all_objects(TopCategory),
             'cart': cart
         }
         return render(request, 'order/success_order.html', context)
