@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import FormView, DetailView, ListView
 from django.contrib.auth import views, logout
 
@@ -13,10 +14,10 @@ from mainapp.models import TopCategory
 from orders.models import Order, OrderItem
 
 
-@login_required(login_url="account:login")
-def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect(reverse_lazy("home"))
+class LogoutUserView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse_lazy("home"))
 
 
 class CustomerLoginView(views.LoginView):
