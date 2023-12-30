@@ -19,7 +19,7 @@ class OrderCreateView(View):
         return render(
             request,
             'order/checkout.html',
-            {'cart': cart, 'form': form, 'top_category': top_categories}
+            {'cart': cart, 'form': form, 'top_categories': top_categories}
         )
 
     def post(self, request):
@@ -38,9 +38,9 @@ class OrderCreateView(View):
 
             cart.clear()
             return render(request, 'order/success_order.html',
-                          {'cart': cart, 'order': order, 'top_category': top_categories})
+                          {'cart': cart, 'order': order, 'top_categories': top_categories})
         return render(request, 'order/checkout.html',
-                      {'cart': cart, 'form': form, 'top_category': top_categories})
+                      {'cart': cart, 'form': form, 'top_categories': top_categories})
 
 
 class SuccessOrderView(View):
@@ -51,7 +51,7 @@ class SuccessOrderView(View):
     def get(self, request):
         cart = Cart(request)
         context = {
-            'top_category': all_objects(TopCategory),
+            'top_categories': all_objects(TopCategory),
             'cart': cart
         }
         return render(request, 'order/success_order.html', context)

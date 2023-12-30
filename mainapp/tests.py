@@ -8,7 +8,7 @@ class TestBaseListView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mainapp/mainpage.html')
         self.assertTrue('products' in response.context)
-        self.assertTrue('top_category' in response.context)
+        self.assertTrue('top_categories' in response.context)
         self.assertTrue('popular_products' in response.context)
 
 class TestProductDetailView(TestCase):
@@ -40,7 +40,7 @@ class TestProductDetailView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mainapp/product_page.html')
         self.assertTrue('product' in response.context)
-        self.assertTrue('top_category' in response.context)
+        self.assertTrue('top_categories' in response.context)
 
 class TestCategoryListView(TestCase):
     def setUp(self):
@@ -60,7 +60,7 @@ class TestCategoryListView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mainapp/product_list.html')
         self.assertTrue('object_list' in response.context)
-        self.assertTrue('top_category' in response.context)
+        self.assertTrue('top_categories' in response.context)
         self.assertTrue('product_count' in response.context)
         self.assertTrue('top_category_title' in response.context)
         self.assertTrue('category_title' in response.context)

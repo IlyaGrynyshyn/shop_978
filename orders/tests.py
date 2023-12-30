@@ -98,7 +98,7 @@ class OrderCreateViewTest(TestCase):
         self.assertTemplateUsed(response, 'order/checkout.html')
         self.assertIn('cart', response.context)
         self.assertIn('form', response.context)
-        self.assertIn('top_category', response.context)
+        self.assertIn('top_categories', response.context)
 
     def test_post_request_valid_data_unauthenticated_user(self):
         data = {
@@ -136,4 +136,4 @@ class SuccessOrderViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "order/success_order.html")
         self.assertIn('cart', response.context)
-        self.assertIn('top_category', response.context)
+        self.assertIn('top_categories', response.context)
