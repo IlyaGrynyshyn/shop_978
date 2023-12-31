@@ -22,7 +22,7 @@ The "978.ua" project is developed using the following technologies:
 
 - Django: Python-based web framework for building web applications.
 - HTML/CSS/JavaScript: For frontend development and user interaction.
-- Database: Utilizing ... (database name and type).
+- Database: PostgreSQL
 
 ## Usage Instructions
 
