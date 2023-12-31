@@ -35,7 +35,6 @@ class Category(models.Model):
     top_category = models.ForeignKey(TopCategory, verbose_name='Parent category', on_delete=models.CASCADE)
     title = models.CharField(max_length=50, verbose_name="Name of the category")
     slug = models.SlugField(unique=True, db_index=True)
-    vendor_code = models.BigIntegerField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.title
@@ -86,25 +85,4 @@ class ProductImage(models.Model):
         return self.product.title
 
     class Meta:
-        ordering = ['-id']
-
-
-class Banner(models.Model):
-    """
-    Model representing banners.
-    """
-    image = models.ImageField(upload_to=content_file_name)
-    slug = models.SlugField()
-    title = models.CharField(max_length=155)
-    subtitle = models.CharField(max_length=155)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'banner_slug': self.slug})
-
-    class Meta:
-        verbose_name = 'Banner'
-        verbose_name_plural = 'Banners'
         ordering = ['-id']

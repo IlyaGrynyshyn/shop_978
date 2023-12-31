@@ -15,23 +15,22 @@
 
             <div class="header__catalog-menu">
               <ul>
-                {% for i in top_category %}
+                {% for top_category in top_categories %}
                   <li>
                     <a href="">
-                      {% if i.category_icon %}
-                        <img class="menucust_icon" src="{{ i.category_icon.url }}" alt=""/>
+                      {% if top_category.category_icon %}
+                        <img class="menucust_icon" src="{{ top_category.category_icon.url }}" alt=""/>
                       {% endif %}
-                      <span>{{ i.title }}</span></a>
+                      <span>{{ top_category.title }}</span></a>
                     <ul>
-                      {% for cat in i.category_set.all %}
+                      {% for category in top_category.category_set.all %}
                         <li>
-                          <a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a>
+                          <a href="{{ category.get_absolute_url }}"><span>{{ category.title }}</span></a>
                         </li>
                       {% endfor %}
                     </ul>
                   </li>
                 {% endfor %}
-                {#                <li><a href=""> <span>Усі категорія</span></a></li>#}
               </ul>
             </div>
           </div>
@@ -55,12 +54,12 @@
         <ul class="mobile-menu__catalog">
           <li><a id="mobmenu"><span>Каталог товарів</span></a>
             <ul>
-              <li>{% for i in top_category %}</li>
-                <li><a> <img class="menucust_icon" src="{{ i.category_icon.url }}" alt="{{ i.title }}"/>
-                  <span>{{ i.title }}</span></a>
+              <li>{% for top_category in top_categories %}</li>
+                <li><a> <img class="menucust_icon" src="{{ top_category.category_icon.url }}" alt="{{ top_category.title }}"/>
+                  <span>{{ top_category.title }}</span></a>
                   <ul>
                     <li>{% for cat in i.category_set.all %}</li>
-                      <li><a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a></li>
+                      <li><a href="{{ top_category.get_absolute_url }}"><span>{{ top_category.title }}</span></a></li>
                       <li>{% endfor %}</li>
                   </ul>
                 </li>
@@ -233,7 +232,7 @@
                                 <span class="current">{{ i.price }} ₴</span>
                               </div>
                               <div class="product-card__buttons">
-                                <a href=""
+                                <a href="{% url "cart:cart_add" i.id %}"
                                    class="product-card__buy btn-red-out remarketing_cart_button"
                                    tabindex="0">В
                                   кошик</a>
@@ -246,12 +245,10 @@
                           </div>
                         </div>
                       {% endfor %}
-                    </div>
-                    <!-- Product Card -->
-                    <!-- Products Slider > Controls -->
-                    <div class="slick-controls">
-                      <div class="slick-controls__dots"></div>
-                      <div class="slick-controls__arrows"></div>
+                      <div class="slick-controls">
+                        <div class="slick-controls__dots"></div>
+                        <div class="slick-controls__arrows"></div>
+                      </div>
                     </div>
                   </div>
                   <!-- ========== /.Product Slider ========== -->

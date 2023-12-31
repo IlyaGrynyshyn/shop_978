@@ -5,7 +5,7 @@
         <div class="breadcrumbs">
             <div class="container">
                 <ol>
-                    <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                    <li><a href="{% url 'home' %}">Головна</a></li>
                     <li>Особистий кабінет</li>
                 </ol>
             </div>
@@ -19,15 +19,15 @@
                         <h3 class="cabinet__title section__title-2">Особистий Кабінет</h3>
                         <div class="cabinet-menu">
                             <div class="cabinet-menu__header">
-                                <h5>{{ request.user.first_name }}</h5>
+                                <h5>{{ request.user }}</h5>
                                 <a href="{% url 'account:logout' %}"><i
                                         class="icon-exit"></i><span>Вийти</span></a>
                             </div>
                             <div class="cabinet-menu__content">
-                                <a href=""><i class="icon-user"></i><span>Обліковий запис</span></a>
-                                <a href=""><i class="icon-password"></i><span>Зміна пароля</span></a>
-                                <a href=""><i class="icon-whishlist"></i><span>Список бажань</span></a>
-                                <a href=""><i class="icon-clock"></i><span>Мої замовлення</span></a>
+                                <a href="{% url 'account:profile' %}"><i class="icon-user"></i><span>Обліковий запис</span></a>
+                                <a href=""><i class="icon-password"></i><span>Зміна пароля (В розробці)</span></a>
+                                <a href=""><i class="icon-whishlist"></i><span>Список бажань (В розробці) </span></a>
+                                <a href="{% url 'account:order_history' %}"><i class="icon-clock"></i><span>Мої замовлення</span></a>
 {#                                <a href=""><i class="icon-file"></i><span>Файли для скачування</span></a>#}
 {#                                <a href=""><i class="icon-exchange"></i><span>Повернення товару</span></a>#}
                                 <a href="{% url 'account:logout' %}" class="cabinet-menu__exit"><i

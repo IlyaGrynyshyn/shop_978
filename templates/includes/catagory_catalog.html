@@ -31,23 +31,22 @@
 
           <div class="header__catalog-menu">
             <ul>
-              {% for i in top_category %}
+              {% for top_category in top_categories %}
                 <li>
                   <a href="">
-                    {% if i.category_icon %}
-                      <img class="menucust_icon" src="{{ i.category_icon.url }}" alt=""/>
+                    {% if top_category.category_icon %}
+                      <img class="menucust_icon" src="{{ top_category.category_icon.url }}" alt=""/>
                     {% endif %}
-                    <span>{{ i.title }}</span></a>
+                    <span>{{ top_category.title }}</span></a>
                   <ul>
-                    {% for cat in i.category_set.all %}
+                    {% for category in top_category.category_set.all %}
                       <li>
-                        <a href="{{ cat.get_absolute_url }}"><span>{{ cat.title }}</span></a>
+                        <a href="{{ category.get_absolute_url }}"><span>{{ category.title }}</span></a>
                       </li>
                     {% endfor %}
                   </ul>
                 </li>
               {% endfor %}
-              {#                <li><a href=""> <span>Усі категорія</span></a></li>#}
             </ul>
           </div>
         </div>
