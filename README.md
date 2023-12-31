@@ -30,7 +30,7 @@ Python must be already installed.
 
 1. **Installation:**
     - Clone the repository to your local machine `https://github.com/IlyaGrynyshyn/shop_978`.
-    - Create virtual environment `python3 -n venv venv`
+    - Create virtual environment `python3 -m venv venv`
     - Install the required dependencies using `pip install -r requirements.txt`.
 
 2. **Running:**
