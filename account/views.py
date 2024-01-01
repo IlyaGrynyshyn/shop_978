@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -8,7 +7,7 @@ from django.contrib.auth import views, logout
 
 from account.forms import CustomerRegistrationForm
 from account.models import Customer
-from account.services import get_filter_objects, all_objects
+from utils.services import get_filter_objects, all_objects
 from cart.services import Cart
 from mainapp.models import TopCategory
 from orders.models import Order, OrderItem

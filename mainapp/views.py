@@ -1,10 +1,9 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
 
 from cart.services import Cart
 from mainapp.models import Product, TopCategory, Category
-from mainapp.services import all_objects, get_objects_with_limit, get_filter_objects, get_object
+from utils.services import all_objects, get_objects_with_limit, get_filter_objects, get_object
 
 
 class BaseListView(ListView):

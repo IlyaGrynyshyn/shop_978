@@ -38,6 +38,15 @@ def get_filter_objects(model, **kwargs) -> QuerySet:
     - model: The model for which to retrieve filtered objects
     - **kwargs: Filtering criteria for retrieving objects
 
-
     """
     return model.objects.filter(**kwargs)
+
+
+def get_objects_with_limit(model, limit: int, order_by: str = None) -> QuerySet:
+    """Retrieve a limited number of objects for the given model.
+        Args:
+        - model: The model for which to retrieve objects
+        - limit: The maximum number of objects to retrieve
+        - order_by: Field to order the objects by (optional)
+        """
+    return all_objects(model).order_by(order_by)[:limit]
