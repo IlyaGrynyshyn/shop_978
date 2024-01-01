@@ -17,7 +17,7 @@ class CustomerRegistrationViewTest(TestCase):
             'username': 'testuser',
             'email': 'test@example.com',
             'first_name': 'Test',
-            'phone': '123456789',
+            'phone': '+380960638342',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
         }
