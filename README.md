@@ -41,6 +41,10 @@ Python must be already installed.
 3. **Registration/Login:**
     - To access all functionalities of the project, create super user and log in to your account.
 
+## Test User
+   - login: admin_test
+   - testpassword
+
 ## Planned Enhancements
 
 Future enhancements for the project include:
