@@ -25,9 +25,13 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY', ")x-_&oh5h+3$r+g(i+wv9qq@8(k@v+!(6kbt!u8(@fu0^*")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = ["127.0.0.1"]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
