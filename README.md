@@ -43,7 +43,7 @@ Python must be already installed.
 
 ## Test User
    - login: admin_test
-   - testpassword
+   - password: testpassword
 
 ## Planned Enhancements
 
