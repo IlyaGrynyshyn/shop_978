@@ -23,11 +23,12 @@ class CustomerLoginView(views.LoginView):
     """
     View for customer login.
     """
+
     success_url = reverse_lazy("account:profile")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cart'] = Cart(self.request)
+        context["cart"] = Cart(self.request)
         return context
 
 
@@ -35,9 +36,10 @@ class CustomerRegistrationView(FormView):
     """
     View for customer registration.
     """
+
     form_class = CustomerRegistrationForm
-    template_name = 'registration/registration.html'
-    success_url = reverse_lazy('account:login')
+    template_name = "registration/registration.html"
+    success_url = reverse_lazy("account:login")
 
     def form_valid(self, form):
         if form.is_valid():
@@ -46,7 +48,7 @@ class CustomerRegistrationView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cart'] = Cart(self.request)
+        context["cart"] = Cart(self.request)
         return context
 
 
@@ -54,15 +56,16 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     """
     View for customer profile details.
     """
+
     model = Customer
-    template_name = 'account/profile.html'
+    template_name = "account/profile.html"
 
     def get_object(self, queryset=None):
         return self.request.user.username
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cart'] = Cart(self.request)
+        context["cart"] = Cart(self.request)
         return context
 
 
@@ -70,16 +73,17 @@ class OrderHistoryView(LoginRequiredMixin, ListView):
     """
     View for displaying the order history of a logged-in user.
     """
+
     model = Order
-    template_name = 'account/order_history.html'
+    template_name = "account/order_history.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         object_list = Order.objects.filter(customer=self.request.user)
         context = super().get_context_data(object_list=object_list, **kwargs)
         order = get_filter_objects(Order, customer=self.request.user)
         order_item = get_filter_objects(OrderItem, order__in=order)
-        context['order'] = order
-        context['order_item'] = order_item
-        context['top_category'] = all_objects(TopCategory)
-        context['cart'] = Cart(self.request)
+        context["order"] = order
+        context["order_item"] = order_item
+        context["top_category"] = all_objects(TopCategory)
+        context["cart"] = Cart(self.request)
         return context
