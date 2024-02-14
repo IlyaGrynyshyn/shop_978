@@ -66,8 +66,8 @@ class CustomerRegistrationViewTest(TestCase):
             ordered=0,
             views=1
         )
-        self.user = get_user_model().objects.create_user(username='testuser', password='testpassword')
-        self.client.login(username='testuser', password='testpassword')
+        self.user = get_user_model().objects.create_user(email='testuser@admin.com', password='testpassword')
+        self.client.force_login(self.user)
         self.order = Order.objects.create(
             customer=self.user,
             first_name="Test First",
