@@ -6,12 +6,15 @@ from django.urls import reverse
 from pytils.translit import slugify
 
 
+
+def content_file_name(instance, filename):
+    return f"icons/{instance.__class__.__name__}/{filename}"
+
 def product_image_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.product.title)}-{uuid.uuid4()}{extension}"
 
-    return os.path.join("shop_978/uploads/products/", filename)
-
+    return os.path.join("uploads/products/", filename)
 
 class TopCategory(models.Model):
     """
@@ -20,7 +23,7 @@ class TopCategory(models.Model):
     """
     title = models.CharField(max_length=50, verbose_name="Name of the top category")
     slug = models.SlugField(unique=True, db_index=True)
-    category_icon = models.ImageField(upload_to="shop_978/uploads/category_icon/", blank=True, null=True)
+    category_icon = models.ImageField(upload_to=content_file_name, blank=True, null=True)
 
     def __str__(self):
         return self.title
