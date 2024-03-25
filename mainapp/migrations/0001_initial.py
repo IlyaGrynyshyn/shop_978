@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "image",
-                    models.ImageField(upload_to=mainapp.models.content_file_name),
+                    models.ImageField(upload_to=mainapp.models.product_image_file_path),
                 ),
                 ("slug", models.SlugField()),
                 ("title", models.CharField(max_length=155)),
@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
                     models.ImageField(
                         blank=True,
                         null=True,
-                        upload_to=mainapp.models.content_file_name,
+                        upload_to=mainapp.models.product_image_file_path,
                     ),
                 ),
             ],
