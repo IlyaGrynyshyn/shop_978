@@ -1,11 +1,20 @@
+import os
+import uuid
+
 from django.db import models
 from django.urls import reverse
+from pytils.translit import slugify
 
 
 
 def content_file_name(instance, filename):
-    return f"images/{instance.__class__.__name__}/{filename}"
+    return f"icons/{instance.__class__.__name__}/{filename}"
 
+def product_image_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.product.title)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/products/", filename)
 
 class TopCategory(models.Model):
     """
@@ -79,7 +88,7 @@ class ProductImage(models.Model):
     Model responsible for product images
     """
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    img = models.ImageField(upload_to=f'images/product/')
+    img = models.ImageField(upload_to=product_image_file_path)
 
     def __str__(self):
         return self.product.title
