@@ -62,7 +62,7 @@ class Product(models.Model):
     Model responsible for products
     """
     category = models.ForeignKey(Category, verbose_name='Category', on_delete=models.CASCADE)
-    title = models.CharField(max_length=150, verbose_name='Title')
+    title = models.CharField(max_length=255, verbose_name='Title')
     slug = models.SlugField(unique=True, db_index=True, max_length=255)
     product_code = models.IntegerField(verbose_name='Product Code')
     price = models.IntegerField(verbose_name='Price')
