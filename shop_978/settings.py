@@ -146,8 +146,8 @@ AUTH_USER_MODEL = "account.Customer"
 CART_SESSION_ID = "cart"
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dfp91f4pz',
-    'API_KEY': '742678396425182',
-    'API_SECRET': 'X6kkMkrBh_EOatjtjP9tVnEqhGA'
+    'CLOUD_NAME': os.getenv("CLOUD_NAME"),
+    'API_KEY': os.getenv("API_KEY"),
+    'API_SECRET': os.getenv("API_SECRET"),
 }
 
