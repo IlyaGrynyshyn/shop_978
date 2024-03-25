@@ -88,7 +88,7 @@ class ProductImage(models.Model):
     Model responsible for product images
     """
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    img = models.ImageField(upload_to=product_image_file_path)
+    img = models.ImageField(upload_to=product_image_file_path, blank=True, null=True)
 
     def __str__(self):
         return self.product.title
