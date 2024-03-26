@@ -25,8 +25,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY', ")x-_&oh5h+3$r+g(i+wv9qq@8(k@v+!(6kbt!u8(@fu0^*")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = "RENDER" not in os.environ
-DEBUG = True
+DEBUG = "RENDER" not in os.environ
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
